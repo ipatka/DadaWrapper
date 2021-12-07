@@ -1,0 +1,1001 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts/DadaSale.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> DadaSale.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>45/45</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>30/36</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>9/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>48/48</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">216×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">432×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity &gt;=0.6.0 &lt;0.9.0;
+&nbsp;
+import "@openzeppelin/contracts/access/AccessControl.sol"; //https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
+import "./fixtures/modifiedOz/IERC721.sol";
+&nbsp;
+import "hardhat/console.sol";
+&nbsp;
+interface IDadaNFT is IERC721 {}
+&nbsp;
+interface IDadaReserve {
+    function transfer(
+        address to,
+        uint256 drawingId,
+        uint256 printIndex
+    ) external;
+&nbsp;
+    function offerCollectibleForSaleToAddress(
+        uint256 drawingId,
+        uint256 printIndex,
+        uint256 minSalePriceInWei,
+        address toAddress
+    ) external;
+&nbsp;
+    function acceptBidForCollectible(
+        uint256 drawingId,
+        uint256 minPrice,
+        uint256 printIndex
+    ) external;
+&nbsp;
+    function offerCollectibleForSale(
+        uint256 drawingId,
+        uint256 printIndex,
+        uint256 minSalePriceInWei
+    ) external;
+&nbsp;
+    function withdrawOfferForCollectible(uint256 drawingId, uint256 printIndex)
+        external;
+&nbsp;
+    function withdraw() external;
+}
+&nbsp;
+interface IDadaCollectible {
+    function drawingIdToCollectibles(uint256)
+        external
+        returns (
+            uint256 drawingId,
+            string memory checkSum,
+            uint256 totalSupply,
+            uint256 nextPrintIndexToAssign,
+            bool allPrintsAssigned,
+            uint256 initialPrice,
+            uint256 initialPrintIndex,
+            string memory collectionName,
+            uint256 authorUId,
+            string memory scarcity
+        );
+&nbsp;
+    function DrawingPrintToAddress(uint256) external returns (address);
+&nbsp;
+    function alt_buyCollectible(uint256 drawingId, uint256 printIndex)
+        external
+        payable;
+&nbsp;
+    function transfer(
+        address to,
+        uint256 drawingId,
+        uint256 printIndex
+    ) external returns (bool success);
+&nbsp;
+    function makeCollectibleUnavailableToSale(
+        address to,
+        uint256 drawingId,
+        uint256 printIndex,
+        uint256 lastSellValue
+    ) external;
+}
+&nbsp;
+/// @title DadaSale - Sale contract that interfaces with Reserve contract
+/// @dev DadaSale must be granted Owner role on the reserve to transfer tokens
+/// @author Isaac Patka
+contract DadaSale is AccessControl {
+    // Roles
+    bytes32 public constant OPERATOR_ROLE = keccak256("OPERATOR_ROLE");
+&nbsp;
+    // Reserve contract holding collectibles
+    IDadaReserve dadaReserve;
+&nbsp;
+    // Modified ERC20 contract
+    IDadaCollectible dadaCollectible;
+&nbsp;
+    // NFT interface for token swaps
+    IERC721 dadaNFT;
+&nbsp;
+    // Dada Multisig
+    address dadaConservatory;
+&nbsp;
+    // Contract State
+    // 0: Swap
+    // 1: Purchase round 1
+    // 2: Purchase round 2, ...
+    mapping(uint256 =&gt; bool) public state;
+&nbsp;
+    // Swap data structures
+    struct Drawing {
+        uint256 DrawingId;
+        uint256 PrintIndex;
+    }
+&nbsp;
+    mapping(uint256 =&gt; Drawing) public swapList; // tokenId =&gt; drawingId
+    mapping(uint256 =&gt; bool) public swapReserved; // print =&gt; isReserved
+&nbsp;
+    // Sale data structures
+&nbsp;
+    // Mapping to keep track of max drawings that can be purchased per address in a round
+    mapping(uint256 =&gt; mapping(uint256 =&gt; uint256)) public capsPerDrawing;
+&nbsp;
+    // Mapping to keep track of prices per round
+    mapping(uint256 =&gt; mapping(uint256 =&gt; uint256)) public priceLists;
+&nbsp;
+    // Mapping to keep track of drawings purchased by an address in a round
+    mapping(uint256 =&gt; mapping(address =&gt; mapping(uint256 =&gt; uint256)))
+        public purchases;
+&nbsp;
+    // Mapping to keep track of addresses allowed for per round
+    mapping(uint256 =&gt; mapping(address =&gt; bool)) public allowList;
+&nbsp;
+    /// @dev constructor sets the interfaces to external contracts and grants admin and operator roles to deployer
+    /// @param _dadaReserveAddress Contract holding the collectibles purchased from the ERC20 DadaCollectible contract
+    /// @param _dadaCollectibleAddress ERC20 DadaCollectible contract
+    /// @param _dadaNftAddress ERC721 DadaCollectible contract
+    /// @param _dadaConservatoryAddress Dada managed multisig
+    constructor(
+        address _dadaReserveAddress,
+        address _dadaCollectibleAddress,
+        address _dadaNftAddress,
+        address _dadaConservatoryAddress
+    ) {
+        dadaReserve = IDadaReserve(_dadaReserveAddress);
+        dadaCollectible = IDadaCollectible(_dadaCollectibleAddress);
+        dadaNFT = IERC721(_dadaNftAddress);
+        dadaConservatory = _dadaConservatoryAddress;
+        _setupRole(OPERATOR_ROLE, msg.sender);
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
+&nbsp;
+    // Prevent ETH from getting stuck here
+    receive() external payable {}
+&nbsp;
+    // Operator role functions
+&nbsp;
+    /// @dev Withdraw allows operator to retrieve ETH from the sale or sent directly to contract
+    /// @param _to Address to receive the ETH
+    function withdraw(address payable _to) external {
+        require(hasRole(OPERATOR_ROLE, msg.sender), "!operator");
+        (bool success, ) = _to.call{value: address(this).balance}("");
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(success, "!transfer");
+    }
+&nbsp;
+    /// @dev Set the current active contract state
+    ///  Paused: Operator functions are allowed but nothing else
+    ///  Discount: Operator functions &amp; discounted purchases enabled
+    ///  Whitelist: Operator functions &amp; public purchases enabled
+    ///  Swap: Operator functions &amp; NFT to ERC20 swaps enabled
+    /// @param _stateEnabled bool array to enable different features: [swap, discount, whitelist]
+    function setContractState(bool[] calldata _stateEnabled) external {
+        require(hasRole(OPERATOR_ROLE, msg.sender), "!operator");
+        for (uint256 index = 0; index &lt; _stateEnabled.length; index++) {
+            state[index] = _stateEnabled[index];
+        }
+    }
+&nbsp;
+    /// @dev Set the list of NFTs that can be swapped for specific prints
+    ///  Reserved prints can not be purchased
+    ///  Requires that the reserve contract has the print specified. Reverts if not
+    /// @param _tokenDrawingPrint 2D array with [NFT tokenId, ERC20 DrawingId, ERC20 PrintIndex]
+    function setSwapList(uint256[3][] calldata _tokenDrawingPrint, bool enabled)
+        external
+    {
+        require(hasRole(OPERATOR_ROLE, msg.sender), "!operator");
+        for (uint256 index = 0; index &lt; _tokenDrawingPrint.length; index++) {
+            if (enabled) {
+                swapReserved[_tokenDrawingPrint[index][2]] = true;
+                swapList[_tokenDrawingPrint[index][0]] = Drawing(
+                    _tokenDrawingPrint[index][1],
+                    _tokenDrawingPrint[index][2]
+                );
+            } else {
+                swapReserved[_tokenDrawingPrint[index][2]] = false;
+                delete swapList[_tokenDrawingPrint[index][0]];
+            }
+        }
+    }
+&nbsp;
+    /// @dev Set the caps per drawing per round
+    /// @param _round ID of the round
+    /// @param _drawingCap Max purchases allowed per drawing
+    function setDrawingCap(uint256 _round, uint256[2][] calldata _drawingCap)
+        external
+    {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(hasRole(OPERATOR_ROLE, msg.sender), "!operator");
+        for (uint256 index = 0; index &lt; _drawingCap.length; index++) {
+            capsPerDrawing[_round][_drawingCap[index][0]] = _drawingCap[index][
+                1
+            ];
+        }
+    }
+&nbsp;
+    /// @dev Set the price list for the discounted round by drawingId
+    /// @param _round ID of the round
+    /// @param _drawingPrice 2D array with [ERC20 DrawingId, Price in ETH]
+    function setPriceList(uint256 _round, uint256[2][] calldata _drawingPrice)
+        external
+    {
+        require(hasRole(OPERATOR_ROLE, msg.sender), "!operator");
+        // Round 0 is the swap round which does not have a price list
+        require(_round &gt; 0, "invalid-round");
+        for (uint256 index = 0; index &lt; _drawingPrice.length; index++) {
+            priceLists[_round][_drawingPrice[index][0]] = _drawingPrice[index][
+                1
+            ];
+        }
+    }
+&nbsp;
+    /// @dev Set the allowList status for specific buyers
+    /// @param _buyers Array of buyer addresses
+    /// @param _allowed State that applies to all buyers in this contract call
+    function setAllowList(
+        uint256 _round,
+        address[] calldata _buyers,
+        bool _allowed
+    ) external {
+        require(hasRole(OPERATOR_ROLE, msg.sender), "!operator");
+        // Round 0 is the swap round which does not have an allow list
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(_round &gt; 0, "invalid-round");
+        for (uint256 index = 0; index &lt; _buyers.length; index++) {
+            allowList[_round][_buyers[index]] = _allowed;
+        }
+    }
+&nbsp;
+    /// @dev Purchase a discounted drawing by a buyer on whitelist, during the whitelist phase
+    /// @param _round Round ID to purchase
+    /// @param _drawingId ERC20 drawing ID to purchase
+    /// @param _printIndex ERC20 print index to purchase
+    function purchase(
+        uint256 _round,
+        uint256 _drawingId,
+        uint256 _printIndex
+    ) external payable {
+        // Round must be active
+        require(state[_round], "!round-state");
+&nbsp;
+        // Sender must send exact price
+        require(msg.value == priceLists[_round][_drawingId], "!value");
+&nbsp;
+        // Sender must be on whitelist
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(allowList[_round][msg.sender], "!whitelist");
+&nbsp;
+        // Prints that are reserved for swaps cannot be purchased by anyone
+        require(!swapReserved[_printIndex], "reserved");
+&nbsp;
+        // Require the cap is not reached per drawing if enabled
+        require(
+            purchases[_round][msg.sender][_drawingId] &lt;
+                capsPerDrawing[_round][_drawingId] ||
+                capsPerDrawing[_round][_drawingId] == 0,
+            "!cap"
+        );
+&nbsp;
+        // Track how many of this drawing the address has purchased
+        purchases[_round][msg.sender][_drawingId]++;
+&nbsp;
+        // Manually set the last purchase price and seller in the ERC20 contract
+        dadaReserve.transfer(address(this), _drawingId, _printIndex);
+        dadaCollectible.makeCollectibleUnavailableToSale(
+            address(this),
+            _drawingId,
+            _printIndex,
+            priceLists[_round][_drawingId]
+        );
+        dadaCollectible.transfer(msg.sender, _drawingId, _printIndex);
+    }
+&nbsp;
+    /// @dev Swap an NFT for an ERC20, during the swap phase
+    /// @param _tokenId ERC721 tokenID to swap
+    function swapToken(uint256 _tokenId) external {
+        require(state[0], "!swap-state");
+&nbsp;
+        // Retrieve specific drawingId and Print to swap
+        uint256 drawingId = swapList[_tokenId].DrawingId;
+        uint256 printIndex = swapList[_tokenId].PrintIndex;
+&nbsp;
+        // Ensure there is a reserved print
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(swapReserved[printIndex], "!swap-eligible");
+&nbsp;
+        // Ensure the reserve still owns this print
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(
+            dadaCollectible.DrawingPrintToAddress(printIndex) ==
+                address(dadaReserve),
+            "!available"
+        );
+&nbsp;
+        // Remove from the swap list
+        delete swapList[_tokenId];
+        swapReserved[printIndex] = false;
+&nbsp;
+        // Transfer NFT to multisig
+        dadaNFT.transferFrom(msg.sender, dadaConservatory, _tokenId);
+&nbsp;
+        // Transfer ERC20 from reserve to swapper
+        dadaReserve.transfer(msg.sender, drawingId, printIndex);
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Sep 07 2021 14:05:48 GMT-0400 (Eastern Daylight Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
