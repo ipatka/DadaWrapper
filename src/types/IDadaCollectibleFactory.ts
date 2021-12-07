@@ -40,55 +40,6 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "OfferedForSale",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "isForSale",
-        type: "bool",
-      },
-      {
-        internalType: "uint256",
-        name: "drawingId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "printIndex",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "seller",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "minValue",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "onlySellTo",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "lastSellValue",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
         name: "drawingId",
         type: "uint256",
       },
