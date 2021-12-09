@@ -11,3 +11,6 @@ nftContent/
 *.txt
 
 .nvmrc
+
+coverage
+coverage.json

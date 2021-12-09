@@ -25,6 +25,7 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
     "_tokenIDToDrawingID(uint256)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "c_0xc34636ea(bytes32)": FunctionFragment;
     "contractURI()": FunctionFragment;
     "get2017TokenId(uint256,uint256)": FunctionFragment;
     "get2019TokenId(uint256,uint256)": FunctionFragment;
@@ -58,6 +59,10 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "c_0xc34636ea",
+    values: [BytesLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "contractURI",
     values?: undefined
@@ -141,6 +146,10 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "c_0xc34636ea",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "contractURI",
     data: BytesLike
@@ -279,6 +288,20 @@ export class DadaCollectibleWrapper extends Contract {
       overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
+    }>;
+
+    c_0xc34636ea(
+      c__0xc34636ea: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: void;
+    }>;
+
+    "c_0xc34636ea(bytes32)"(
+      c__0xc34636ea: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: void;
     }>;
 
     contractURI(overrides?: CallOverrides): Promise<{
@@ -566,6 +589,16 @@ export class DadaCollectibleWrapper extends Contract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  c_0xc34636ea(
+    c__0xc34636ea: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
+  "c_0xc34636ea(bytes32)"(
+    c__0xc34636ea: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<void>;
+
   contractURI(overrides?: CallOverrides): Promise<string>;
 
   "contractURI()"(overrides?: CallOverrides): Promise<string>;
@@ -800,6 +833,16 @@ export class DadaCollectibleWrapper extends Contract {
       owner: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    c_0xc34636ea(
+      c__0xc34636ea: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "c_0xc34636ea(bytes32)"(
+      c__0xc34636ea: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
@@ -1083,6 +1126,16 @@ export class DadaCollectibleWrapper extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    c_0xc34636ea(
+      c__0xc34636ea: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "c_0xc34636ea(bytes32)"(
+      c__0xc34636ea: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     "contractURI()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1322,6 +1375,16 @@ export class DadaCollectibleWrapper extends Contract {
 
     "balanceOf(address)"(
       owner: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    c_0xc34636ea(
+      c__0xc34636ea: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "c_0xc34636ea(bytes32)"(
+      c__0xc34636ea: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
