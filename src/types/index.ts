@@ -9,8 +9,6 @@ export { Erc721Factory } from "./Erc721Factory";
 export type { Erc721 } from "./Erc721";
 export { DadaCollectibleFactory } from "./DadaCollectibleFactory";
 export type { DadaCollectible } from "./DadaCollectible";
-export { DadaSaleFactory } from "./DadaSaleFactory";
-export type { DadaSale } from "./DadaSale";
 export { DadaCollectibleWrapperFactory } from "./DadaCollectibleWrapperFactory";
 export type { DadaCollectibleWrapper } from "./DadaCollectibleWrapper";
 export { AnyErc20Factory } from "./AnyErc20Factory";

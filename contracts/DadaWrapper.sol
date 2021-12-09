@@ -124,7 +124,7 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
 
         uint256 _wrappedTokenId = get2017TokenId(_drawingId, _printIndex); /*Calculate new token ID*/
 
-        require(!_exists(_wrappedTokenId), "minted"); /*Ensure this token has not been wrapped - should be unreachable*/
+        require(!_exists(_wrappedTokenId), "minted"); /*Ensure this token has not been wrapped - failure condition should be unreachable*/
 
         _mint(msg.sender, _wrappedTokenId); /*Mint newly wrapped token to sender*/
         emit WrappedCreep(_drawingId, _printIndex, _wrappedTokenId);
@@ -162,7 +162,7 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
 
         uint256 _wrappedTokenId = get2019TokenId(_itemId, _tokenId); /*Encode item and token into new token ID*/
 
-        require(!_exists(_wrappedTokenId), "minted"); /*Ensure this token has not been wrapped - should be unreacheable*/
+        require(!_exists(_wrappedTokenId), "minted"); /*Ensure this token has not been wrapped - failure condition should be unreacheable*/
 
         _mint(msg.sender, _wrappedTokenId); /*Mint newly wrapped token to sender*/
         emit WrappedWeirdo(_itemId, _tokenId, _wrappedTokenId);
@@ -173,16 +173,16 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
     /// @param _tokenId 2019 ERC721 token ID
     function unwrapWeirdo(uint256 _tokenId) public {
         (uint256 _itemId, , , , , , , , , ) = dadaNft.collectibleInfo(_tokenId); /*Fetch unique item ID to identify this drawing*/
-        uint256 _wrappedTokenId = get2019TokenId(_itemId, _tokenId); /*Enocde item and token into new token ID*/
+        uint256 _wrappedTokenId = get2019TokenId(_itemId, _tokenId); /*Encode item and token into new token ID*/
         require(ownerOf(_wrappedTokenId) == msg.sender, "!owner"); /*Ensure sender owns the "NFT they want to unwrap*/
 
-        require(dadaNft.ownerOf(_tokenId) == address(this), "!owner"); /*Ensure original token is still owned by this contract - should be unreachable*/
+        require(dadaNft.ownerOf(_tokenId) == address(this), "!owner"); /*Ensure original token is still owned by this contract - failure condition should be unreachable*/
 
         _burn(_wrappedTokenId); /*Send token to 0 address - can be re-minted later if re-wrapped*/
 
         dadaNft.transferFrom(address(this), msg.sender, _tokenId); /*Send original token to sender*/
 
-        require(dadaNft.ownerOf(_tokenId) == msg.sender, "transfer failed"); /*Ensure transfer succeeded - should be unreachable*/
+        require(dadaNft.ownerOf(_tokenId) == msg.sender, "transfer failed"); /*Ensure transfer succeeded - failure condition should be unreachable*/
 
         emit UnwrappedWeirdo(_itemId, _tokenId, _wrappedTokenId);
     }
