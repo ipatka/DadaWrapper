@@ -22,10 +22,10 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
 interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
   functions: {
-    "_setBaseURI(string)": FunctionFragment;
     "_tokenIDToDrawingID(uint256)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "contractURI()": FunctionFragment;
     "get2017TokenId(uint256,uint256)": FunctionFragment;
     "get2019TokenId(uint256,uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
@@ -36,6 +36,8 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
     "renounceOwnership()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
+    "setBaseURI(string)": FunctionFragment;
+    "setContractURI(string)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
@@ -47,7 +49,6 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
     "wrapWeirdo(uint256)": FunctionFragment;
   };
 
-  encodeFunctionData(functionFragment: "_setBaseURI", values: [string]): string;
   encodeFunctionData(
     functionFragment: "_tokenIDToDrawingID",
     values: [BigNumberish]
@@ -57,6 +58,10 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "contractURI",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "get2017TokenId",
     values: [BigNumberish, BigNumberish]
@@ -90,6 +95,11 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
     values: [string, boolean]
+  ): string;
+  encodeFunctionData(functionFragment: "setBaseURI", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setContractURI",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
@@ -126,15 +136,15 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "_setBaseURI",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "_tokenIDToDrawingID",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "contractURI",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "get2017TokenId",
     data: BytesLike
@@ -164,6 +174,11 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setApprovalForAll",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setBaseURI", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setContractURI",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -226,16 +241,6 @@ export class DadaCollectibleWrapper extends Contract {
   interface: DadaCollectibleWrapperInterface;
 
   functions: {
-    _setBaseURI(
-      baseUri: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
-    "_setBaseURI(string)"(
-      baseUri: string,
-      overrides?: Overrides
-    ): Promise<ContractTransaction>;
-
     _tokenIDToDrawingID(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -276,6 +281,14 @@ export class DadaCollectibleWrapper extends Contract {
       0: BigNumber;
     }>;
 
+    contractURI(overrides?: CallOverrides): Promise<{
+      0: string;
+    }>;
+
+    "contractURI()"(overrides?: CallOverrides): Promise<{
+      0: string;
+    }>;
+
     get2017TokenId(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
@@ -293,7 +306,7 @@ export class DadaCollectibleWrapper extends Contract {
     }>;
 
     get2019TokenId(
-      _assetId: BigNumberish,
+      _itemId: BigNumberish,
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
@@ -301,7 +314,7 @@ export class DadaCollectibleWrapper extends Contract {
     }>;
 
     "get2019TokenId(uint256,uint256)"(
-      _assetId: BigNumberish,
+      _itemId: BigNumberish,
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
@@ -396,6 +409,26 @@ export class DadaCollectibleWrapper extends Contract {
     "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    setBaseURI(
+      baseURI_: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "setBaseURI(string)"(
+      baseURI_: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    setContractURI(
+      _contractURI: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "setContractURI(string)"(
+      _contractURI: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
@@ -504,16 +537,6 @@ export class DadaCollectibleWrapper extends Contract {
     ): Promise<ContractTransaction>;
   };
 
-  _setBaseURI(
-    baseUri: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
-  "_setBaseURI(string)"(
-    baseUri: string,
-    overrides?: Overrides
-  ): Promise<ContractTransaction>;
-
   _tokenIDToDrawingID(
     arg0: BigNumberish,
     overrides?: CallOverrides
@@ -543,6 +566,10 @@ export class DadaCollectibleWrapper extends Contract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  contractURI(overrides?: CallOverrides): Promise<string>;
+
+  "contractURI()"(overrides?: CallOverrides): Promise<string>;
+
   get2017TokenId(
     _drawingId: BigNumberish,
     _printIndex: BigNumberish,
@@ -556,13 +583,13 @@ export class DadaCollectibleWrapper extends Contract {
   ): Promise<BigNumber>;
 
   get2019TokenId(
-    _assetId: BigNumberish,
+    _itemId: BigNumberish,
     _tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   "get2019TokenId(uint256,uint256)"(
-    _assetId: BigNumberish,
+    _itemId: BigNumberish,
     _tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
@@ -632,6 +659,26 @@ export class DadaCollectibleWrapper extends Contract {
   "setApprovalForAll(address,bool)"(
     operator: string,
     approved: boolean,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  setBaseURI(
+    baseURI_: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "setBaseURI(string)"(
+    baseURI_: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  setContractURI(
+    _contractURI: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "setContractURI(string)"(
+    _contractURI: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
@@ -725,13 +772,6 @@ export class DadaCollectibleWrapper extends Contract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    _setBaseURI(baseUri: string, overrides?: CallOverrides): Promise<void>;
-
-    "_setBaseURI(string)"(
-      baseUri: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     _tokenIDToDrawingID(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -761,6 +801,10 @@ export class DadaCollectibleWrapper extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    contractURI(overrides?: CallOverrides): Promise<string>;
+
+    "contractURI()"(overrides?: CallOverrides): Promise<string>;
+
     get2017TokenId(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
@@ -774,13 +818,13 @@ export class DadaCollectibleWrapper extends Contract {
     ): Promise<BigNumber>;
 
     get2019TokenId(
-      _assetId: BigNumberish,
+      _itemId: BigNumberish,
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "get2019TokenId(uint256,uint256)"(
-      _assetId: BigNumberish,
+      _itemId: BigNumberish,
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -850,6 +894,23 @@ export class DadaCollectibleWrapper extends Contract {
     "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setBaseURI(baseURI_: string, overrides?: CallOverrides): Promise<void>;
+
+    "setBaseURI(string)"(
+      baseURI_: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setContractURI(
+      _contractURI: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "setContractURI(string)"(
+      _contractURI: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -974,7 +1035,7 @@ export class DadaCollectibleWrapper extends Contract {
     ): EventFilter;
 
     UnwrappedWeirdo(
-      assetId: BigNumberish | null,
+      itemId: BigNumberish | null,
       tokenId: null,
       wrappedTokenId: null
     ): EventFilter;
@@ -986,20 +1047,13 @@ export class DadaCollectibleWrapper extends Contract {
     ): EventFilter;
 
     WrappedWeirdo(
-      assetId: BigNumberish | null,
+      itemId: BigNumberish | null,
       tokenId: null,
       wrappedTokenId: null
     ): EventFilter;
   };
 
   estimateGas: {
-    _setBaseURI(baseUri: string, overrides?: Overrides): Promise<BigNumber>;
-
-    "_setBaseURI(string)"(
-      baseUri: string,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
-
     _tokenIDToDrawingID(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -1029,6 +1083,10 @@ export class DadaCollectibleWrapper extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    contractURI(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "contractURI()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     get2017TokenId(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
@@ -1042,13 +1100,13 @@ export class DadaCollectibleWrapper extends Contract {
     ): Promise<BigNumber>;
 
     get2019TokenId(
-      _assetId: BigNumberish,
+      _itemId: BigNumberish,
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "get2019TokenId(uint256,uint256)"(
-      _assetId: BigNumberish,
+      _itemId: BigNumberish,
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -1121,6 +1179,23 @@ export class DadaCollectibleWrapper extends Contract {
     "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    setBaseURI(baseURI_: string, overrides?: Overrides): Promise<BigNumber>;
+
+    "setBaseURI(string)"(
+      baseURI_: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    setContractURI(
+      _contractURI: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "setContractURI(string)"(
+      _contractURI: string,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
@@ -1218,16 +1293,6 @@ export class DadaCollectibleWrapper extends Contract {
   };
 
   populateTransaction: {
-    _setBaseURI(
-      baseUri: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
-    "_setBaseURI(string)"(
-      baseUri: string,
-      overrides?: Overrides
-    ): Promise<PopulatedTransaction>;
-
     _tokenIDToDrawingID(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -1260,6 +1325,10 @@ export class DadaCollectibleWrapper extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "contractURI()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     get2017TokenId(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
@@ -1273,13 +1342,13 @@ export class DadaCollectibleWrapper extends Contract {
     ): Promise<PopulatedTransaction>;
 
     get2019TokenId(
-      _assetId: BigNumberish,
+      _itemId: BigNumberish,
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "get2019TokenId(uint256,uint256)"(
-      _assetId: BigNumberish,
+      _itemId: BigNumberish,
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -1352,6 +1421,26 @@ export class DadaCollectibleWrapper extends Contract {
     "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    setBaseURI(
+      baseURI_: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "setBaseURI(string)"(
+      baseURI_: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    setContractURI(
+      _contractURI: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "setContractURI(string)"(
+      _contractURI: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 

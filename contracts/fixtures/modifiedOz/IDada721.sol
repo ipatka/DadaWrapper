@@ -139,4 +139,20 @@ interface IDada721 is IERC165 {
         uint256 tokenId,
         bytes calldata data
     ) external;
+
+    function collectibleInfo(uint256 _collectibleId)
+        external
+        view
+        returns (
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            string memory,
+            string memory
+        );
 }

@@ -21,17 +21,22 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface IDada721Interface extends ethers.utils.Interface {
+interface MockDadaNftInterface extends ethers.utils.Interface {
   functions: {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "collectibleInfo(uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "mintItem(address,uint256)": FunctionFragment;
+    "name()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
+    "symbol()": FunctionFragment;
+    "tokenToItem(uint256)": FunctionFragment;
+    "tokenURI(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
   };
 
@@ -53,6 +58,11 @@ interface IDada721Interface extends ethers.utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "mintItem",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(
     functionFragment: "ownerOf",
     values: [BigNumberish]
   ): string;
@@ -67,6 +77,15 @@ interface IDada721Interface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
+  ): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "tokenToItem",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenURI",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
@@ -87,6 +106,8 @@ interface IDada721Interface extends ethers.utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "mintItem", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "safeTransferFrom",
@@ -100,6 +121,12 @@ interface IDada721Interface extends ethers.utils.Interface {
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenToItem",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferFrom",
     data: BytesLike
@@ -116,7 +143,7 @@ interface IDada721Interface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
-export class IDada721 extends Contract {
+export class MockDadaNft extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -127,7 +154,7 @@ export class IDada721 extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: IDada721Interface;
+  interface: MockDadaNftInterface;
 
   functions: {
     approve(
@@ -146,7 +173,6 @@ export class IDada721 extends Contract {
       owner: string,
       overrides?: CallOverrides
     ): Promise<{
-      balance: BigNumber;
       0: BigNumber;
     }>;
 
@@ -154,7 +180,6 @@ export class IDada721 extends Contract {
       owner: string,
       overrides?: CallOverrides
     ): Promise<{
-      balance: BigNumber;
       0: BigNumber;
     }>;
 
@@ -194,7 +219,6 @@ export class IDada721 extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
-      operator: string;
       0: string;
     }>;
 
@@ -202,7 +226,6 @@ export class IDada721 extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
-      operator: string;
       0: string;
     }>;
 
@@ -222,11 +245,30 @@ export class IDada721 extends Contract {
       0: boolean;
     }>;
 
+    mintItem(
+      to: string,
+      itemId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "mintItem(address,uint256)"(
+      to: string,
+      itemId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    name(overrides?: CallOverrides): Promise<{
+      0: string;
+    }>;
+
+    "name()"(overrides?: CallOverrides): Promise<{
+      0: string;
+    }>;
+
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
-      owner: string;
       0: string;
     }>;
 
@@ -234,7 +276,6 @@ export class IDada721 extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
-      owner: string;
       0: string;
     }>;
 
@@ -249,19 +290,19 @@ export class IDada721 extends Contract {
       from: string,
       to: string,
       tokenId: BigNumberish,
-      data: BytesLike,
+      _data: BytesLike,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
       operator: string,
-      _approved: boolean,
+      approved: boolean,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     "setApprovalForAll(address,bool)"(
       operator: string,
-      _approved: boolean,
+      approved: boolean,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
@@ -277,6 +318,42 @@ export class IDada721 extends Contract {
       overrides?: CallOverrides
     ): Promise<{
       0: boolean;
+    }>;
+
+    symbol(overrides?: CallOverrides): Promise<{
+      0: string;
+    }>;
+
+    "symbol()"(overrides?: CallOverrides): Promise<{
+      0: string;
+    }>;
+
+    tokenToItem(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    "tokenToItem(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+    }>;
+
+    tokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
+    }>;
+
+    "tokenURI(uint256)"(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: string;
     }>;
 
     transferFrom(
@@ -367,6 +444,22 @@ export class IDada721 extends Contract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  mintItem(
+    to: string,
+    itemId: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "mintItem(address,uint256)"(
+    to: string,
+    itemId: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  name(overrides?: CallOverrides): Promise<string>;
+
+  "name()"(overrides?: CallOverrides): Promise<string>;
+
   ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   "ownerOf(uint256)"(
@@ -385,19 +478,19 @@ export class IDada721 extends Contract {
     from: string,
     to: string,
     tokenId: BigNumberish,
-    data: BytesLike,
+    _data: BytesLike,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
     operator: string,
-    _approved: boolean,
+    approved: boolean,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   "setApprovalForAll(address,bool)"(
     operator: string,
-    _approved: boolean,
+    approved: boolean,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
@@ -410,6 +503,27 @@ export class IDada721 extends Contract {
     interfaceId: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  symbol(overrides?: CallOverrides): Promise<string>;
+
+  "symbol()"(overrides?: CallOverrides): Promise<string>;
+
+  tokenToItem(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "tokenToItem(uint256)"(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  "tokenURI(uint256)"(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   transferFrom(
     from: string,
@@ -499,6 +613,22 @@ export class IDada721 extends Contract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    mintItem(
+      to: string,
+      itemId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "mintItem(address,uint256)"(
+      to: string,
+      itemId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    name(overrides?: CallOverrides): Promise<string>;
+
+    "name()"(overrides?: CallOverrides): Promise<string>;
+
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     "ownerOf(uint256)"(
@@ -517,19 +647,19 @@ export class IDada721 extends Contract {
       from: string,
       to: string,
       tokenId: BigNumberish,
-      data: BytesLike,
+      _data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setApprovalForAll(
       operator: string,
-      _approved: boolean,
+      approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "setApprovalForAll(address,bool)"(
       operator: string,
-      _approved: boolean,
+      approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -542,6 +672,27 @@ export class IDada721 extends Contract {
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    symbol(overrides?: CallOverrides): Promise<string>;
+
+    "symbol()"(overrides?: CallOverrides): Promise<string>;
+
+    tokenToItem(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "tokenToItem(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    "tokenURI(uint256)"(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     transferFrom(
       from: string,
@@ -630,6 +781,22 @@ export class IDada721 extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    mintItem(
+      to: string,
+      itemId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "mintItem(address,uint256)"(
+      to: string,
+      itemId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    name(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "name()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -651,19 +818,19 @@ export class IDada721 extends Contract {
       from: string,
       to: string,
       tokenId: BigNumberish,
-      data: BytesLike,
+      _data: BytesLike,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
-      _approved: boolean,
+      approved: boolean,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
     "setApprovalForAll(address,bool)"(
       operator: string,
-      _approved: boolean,
+      approved: boolean,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
@@ -674,6 +841,30 @@ export class IDada721 extends Contract {
 
     "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    symbol(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "symbol()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    tokenToItem(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "tokenToItem(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    tokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "tokenURI(uint256)"(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -747,6 +938,22 @@ export class IDada721 extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    mintItem(
+      to: string,
+      itemId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "mintItem(address,uint256)"(
+      to: string,
+      itemId: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -768,19 +975,19 @@ export class IDada721 extends Contract {
       from: string,
       to: string,
       tokenId: BigNumberish,
-      data: BytesLike,
+      _data: BytesLike,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
-      _approved: boolean,
+      approved: boolean,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     "setApprovalForAll(address,bool)"(
       operator: string,
-      _approved: boolean,
+      approved: boolean,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
@@ -791,6 +998,30 @@ export class IDada721 extends Contract {
 
     "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "symbol()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    tokenToItem(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "tokenToItem(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    tokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "tokenURI(uint256)"(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

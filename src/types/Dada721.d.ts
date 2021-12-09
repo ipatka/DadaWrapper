@@ -25,6 +25,7 @@ interface Dada721Interface extends ethers.utils.Interface {
   functions: {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "collectibleInfo(uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "name()": FunctionFragment;
@@ -42,6 +43,10 @@ interface Dada721Interface extends ethers.utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "collectibleInfo",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
@@ -79,6 +84,10 @@ interface Dada721Interface extends ethers.utils.Interface {
 
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "collectibleInfo",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
@@ -157,6 +166,38 @@ export class Dada721 extends Contract {
       overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
+    }>;
+
+    collectibleInfo(
+      _collectibleId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: string;
+      9: string;
+    }>;
+
+    "collectibleInfo(uint256)"(
+      _collectibleId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: string;
+      9: string;
     }>;
 
     getApproved(
@@ -308,6 +349,38 @@ export class Dada721 extends Contract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  collectibleInfo(
+    _collectibleId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: BigNumber;
+    4: BigNumber;
+    5: BigNumber;
+    6: BigNumber;
+    7: BigNumber;
+    8: string;
+    9: string;
+  }>;
+
+  "collectibleInfo(uint256)"(
+    _collectibleId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<{
+    0: BigNumber;
+    1: BigNumber;
+    2: BigNumber;
+    3: BigNumber;
+    4: BigNumber;
+    5: BigNumber;
+    6: BigNumber;
+    7: BigNumber;
+    8: string;
+    9: string;
+  }>;
+
   getApproved(
     tokenId: BigNumberish,
     overrides?: CallOverrides
@@ -422,6 +495,38 @@ export class Dada721 extends Contract {
       owner: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    collectibleInfo(
+      _collectibleId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: string;
+      9: string;
+    }>;
+
+    "collectibleInfo(uint256)"(
+      _collectibleId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: BigNumber;
+      1: BigNumber;
+      2: BigNumber;
+      3: BigNumber;
+      4: BigNumber;
+      5: BigNumber;
+      6: BigNumber;
+      7: BigNumber;
+      8: string;
+      9: string;
+    }>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -559,6 +664,16 @@ export class Dada721 extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    collectibleInfo(
+      _collectibleId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "collectibleInfo(uint256)"(
+      _collectibleId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -681,6 +796,16 @@ export class Dada721 extends Contract {
 
     "balanceOf(address)"(
       owner: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    collectibleInfo(
+      _collectibleId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "collectibleInfo(uint256)"(
+      _collectibleId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
