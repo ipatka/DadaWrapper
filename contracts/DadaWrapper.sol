@@ -45,6 +45,25 @@ interface IDadaCollectible {
     function buyCollectible(uint256 drawingId, uint256 printIndex)
         external
         payable;
+
+    function makeCollectibleUnavailableToSale(
+        address to,
+        uint256 drawingId,
+        uint256 printIndex,
+        uint256 lastSellValue
+    ) external;
+
+    function OfferedForSale(uint256)
+        external
+        returns (
+            bool,
+            uint256,
+            uint256,
+            address,
+            uint256,
+            address,
+            uint256
+        );
 }
 
 contract DadaCollectibleWrapper is ERC721, Ownable {
@@ -52,8 +71,6 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
     IDadaCollectible dadaCollectible; /*2017 ERC20 collection contract*/
 
     IDada721 dadaNft; /*2019 ERC721 collection contract*/
-
-    mapping(uint256 => uint256) public _tokenIDToDrawingID;
 
     string private _baseTokenURI; /*URI where metadata for all tokens is stored*/
 
@@ -115,7 +132,18 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
             "!owner"
         ); /* Ensure sender owns the token they are trying to wrap*/
 
+        (, , , , , , uint256 _lastSalePrice) = dadaCollectible.OfferedForSale(
+            _printIndex
+        );
+
         dadaCollectible.buyCollectible(_drawingId, _printIndex); /*Transfer the ERC20 into this contract*/
+
+        dadaCollectible.makeCollectibleUnavailableToSale(
+            msg.sender,
+            _drawingId,
+            _printIndex,
+            _lastSalePrice
+        ); /*Overwrite the 0 price with last sale value*/
 
         require(
             dadaCollectible.DrawingPrintToAddress(_printIndex) == address(this),

@@ -8,6 +8,7 @@ import { DadaCollectibleWrapper } from '../src/types/DadaCollectibleWrapper'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { drawingIds, initialPrices, initialPrintIndexes, totalSupplies } from '../src/util/simulation'
 import { BaseProvider } from '@ethersproject/providers'
+import { wrap2017, wrap2019 } from './presets'
 
 use(solidity)
 
@@ -87,7 +88,7 @@ describe.only('Dada Wrapper', function () {
   }
 
   describe('Simulation', function () {
-    this.beforeAll(async function () {
+    this.beforeEach(async function () {
       // Deploy ERC20 contract
       dada = (await DadaCollectible.deploy()) as DadaCollectible
       mockNft = (await MockNft.deploy()) as MockDadaNft
@@ -121,12 +122,10 @@ describe.only('Dada Wrapper', function () {
       it('Allows alice to wrap a token', async function () {
         const drawingId = drawingIds[0]
         const printIdx = initialPrintIndexes[0]
+        const price = ethers.utils.parseEther(initialPrices[0])
 
-        await dadaAsAlice.alt_buyCollectible(drawingId, printIdx)
-        expect(await dada.DrawingPrintToAddress(printIdx)).to.equal(aliceAddress)
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printIdx)
 
-        await dadaAsAlice.offerCollectibleForSaleToAddress(drawingId, printIdx, 0, dadaWrapper.address)
-        await dadaWrapperAsAlice.wrapCreep(drawingId, printIdx)
         expect(await dada.DrawingPrintToAddress(printIdx)).to.equal(dadaWrapper.address)
         const tokenId = await dadaWrapper.get2017TokenId(drawingId, printIdx)
         expect(await dadaWrapper.ownerOf(tokenId)).to.equal(aliceAddress)
@@ -134,6 +133,8 @@ describe.only('Dada Wrapper', function () {
       it('Allows alice to unwrap a token', async function () {
         const drawingId = drawingIds[0]
         const printIdx = initialPrintIndexes[0]
+        const price = ethers.utils.parseEther(initialPrices[0])
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printIdx)
         const tokenId = await dadaWrapper.get2017TokenId(drawingId, printIdx)
         console.log({ aliceAddress })
         expect(await dada.DrawingPrintToAddress(printIdx)).to.equal(dadaWrapper.address)
@@ -143,15 +144,23 @@ describe.only('Dada Wrapper', function () {
         expect(dadaWrapper.ownerOf(tokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
         expect(await dada.DrawingPrintToAddress(printIdx)).to.equal(aliceAddress)
       })
+      it('Retains the last sale price during wrapping', async function () {
+        const drawingId = drawingIds[0]
+        const printIdx = initialPrintIndexes[0]
+        const price = ethers.utils.parseEther(initialPrices[0])
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printIdx)
+        const offer = await dada.OfferedForSale(initialPrintIndexes[0])
+        expect(offer.lastSellValue).to.equal(price)
+        expect(offer.isForSale).to.equal(false)
+        expect(offer.seller).to.equal(aliceAddress)
+      })
     })
     describe('Wrapping 2019', function () {
       it('Allows alice to wrap a token', async function () {
         const tokenId = 1
 
         expect(await mockNft.ownerOf(tokenId)).to.equal(aliceAddress)
-        await mockNftAsAlice.approve(dadaWrapper.address, tokenId)
-
-        await dadaWrapperAsAlice.wrapWeirdo(tokenId)
+        await wrap2019(mockNftAsAlice, dadaWrapperAsAlice, tokenId)
         expect(await mockNft.ownerOf(tokenId)).to.equal(dadaWrapper.address)
         const wrappedTokenId = await dadaWrapper.get2019TokenId(mockConfig.nfts[0].itemId, tokenId)
         console.log({ wrappedTokenId })
@@ -160,6 +169,7 @@ describe.only('Dada Wrapper', function () {
       it('Allows alice to unwrap a token', async function () {
         const tokenId = 1
 
+        await wrap2019(mockNftAsAlice, dadaWrapperAsAlice, tokenId)
         const wrappedTokenId = await dadaWrapper.get2019TokenId(mockConfig.nfts[0].itemId, tokenId)
         expect(await mockNft.ownerOf(tokenId)).to.equal(dadaWrapper.address)
         expect(await dadaWrapper.ownerOf(wrappedTokenId)).to.equal(aliceAddress)
@@ -173,9 +183,10 @@ describe.only('Dada Wrapper', function () {
       it('Allows owner to set base URI', async function () {
         const drawingId = drawingIds[0]
         const printIdx = initialPrintIndexes[0]
+        const price = ethers.utils.parseEther(initialPrices[0])
 
-        await dadaAsAlice.offerCollectibleForSaleToAddress(drawingId, printIdx, 0, dadaWrapper.address)
-        await dadaWrapperAsAlice.wrapCreep(drawingId, printIdx)
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printIdx)
+
         const tokenId = await dadaWrapper.get2017TokenId(drawingId, printIdx)
         expect(await dadaWrapper.tokenURI(tokenId)).to.equal(mockConfig.baseUri + tokenId.toString())
 

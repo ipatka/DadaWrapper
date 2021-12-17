@@ -40,6 +40,55 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "OfferedForSale",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
         name: "drawingId",
         type: "uint256",
       },
@@ -52,6 +101,34 @@ const _abi = [
     name: "buyCollectible",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "drawingId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "printIndex",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "lastSellValue",
+        type: "uint256",
+      },
+    ],
+    name: "makeCollectibleUnavailableToSale",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {

@@ -24,7 +24,9 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 interface IDadaCollectibleInterface extends ethers.utils.Interface {
   functions: {
     "DrawingPrintToAddress(uint256)": FunctionFragment;
+    "OfferedForSale(uint256)": FunctionFragment;
     "buyCollectible(uint256,uint256)": FunctionFragment;
+    "makeCollectibleUnavailableToSale(address,uint256,uint256,uint256)": FunctionFragment;
     "transfer(address,uint256,uint256)": FunctionFragment;
   };
 
@@ -33,8 +35,16 @@ interface IDadaCollectibleInterface extends ethers.utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "OfferedForSale",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "buyCollectible",
     values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "makeCollectibleUnavailableToSale",
+    values: [string, BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transfer",
@@ -46,7 +56,15 @@ interface IDadaCollectibleInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "OfferedForSale",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "buyCollectible",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "makeCollectibleUnavailableToSale",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
@@ -78,6 +96,16 @@ export class IDadaCollectible extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
+    OfferedForSale(
+      arg0: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "OfferedForSale(uint256)"(
+      arg0: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
     buyCollectible(
       drawingId: BigNumberish,
       printIndex: BigNumberish,
@@ -88,6 +116,22 @@ export class IDadaCollectible extends Contract {
       drawingId: BigNumberish,
       printIndex: BigNumberish,
       overrides?: PayableOverrides
+    ): Promise<ContractTransaction>;
+
+    makeCollectibleUnavailableToSale(
+      to: string,
+      drawingId: BigNumberish,
+      printIndex: BigNumberish,
+      lastSellValue: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "makeCollectibleUnavailableToSale(address,uint256,uint256,uint256)"(
+      to: string,
+      drawingId: BigNumberish,
+      printIndex: BigNumberish,
+      lastSellValue: BigNumberish,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     transfer(
@@ -115,6 +159,16 @@ export class IDadaCollectible extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  OfferedForSale(
+    arg0: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "OfferedForSale(uint256)"(
+    arg0: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   buyCollectible(
     drawingId: BigNumberish,
     printIndex: BigNumberish,
@@ -125,6 +179,22 @@ export class IDadaCollectible extends Contract {
     drawingId: BigNumberish,
     printIndex: BigNumberish,
     overrides?: PayableOverrides
+  ): Promise<ContractTransaction>;
+
+  makeCollectibleUnavailableToSale(
+    to: string,
+    drawingId: BigNumberish,
+    printIndex: BigNumberish,
+    lastSellValue: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "makeCollectibleUnavailableToSale(address,uint256,uint256,uint256)"(
+    to: string,
+    drawingId: BigNumberish,
+    printIndex: BigNumberish,
+    lastSellValue: BigNumberish,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   transfer(
@@ -152,6 +222,32 @@ export class IDadaCollectible extends Contract {
       overrides?: CallOverrides
     ): Promise<string>;
 
+    OfferedForSale(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+      1: BigNumber;
+      2: BigNumber;
+      3: string;
+      4: BigNumber;
+      5: string;
+      6: BigNumber;
+    }>;
+
+    "OfferedForSale(uint256)"(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+      1: BigNumber;
+      2: BigNumber;
+      3: string;
+      4: BigNumber;
+      5: string;
+      6: BigNumber;
+    }>;
+
     buyCollectible(
       drawingId: BigNumberish,
       printIndex: BigNumberish,
@@ -161,6 +257,22 @@ export class IDadaCollectible extends Contract {
     "buyCollectible(uint256,uint256)"(
       drawingId: BigNumberish,
       printIndex: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    makeCollectibleUnavailableToSale(
+      to: string,
+      drawingId: BigNumberish,
+      printIndex: BigNumberish,
+      lastSellValue: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "makeCollectibleUnavailableToSale(address,uint256,uint256,uint256)"(
+      to: string,
+      drawingId: BigNumberish,
+      printIndex: BigNumberish,
+      lastSellValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -192,6 +304,16 @@ export class IDadaCollectible extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    OfferedForSale(
+      arg0: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "OfferedForSale(uint256)"(
+      arg0: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
     buyCollectible(
       drawingId: BigNumberish,
       printIndex: BigNumberish,
@@ -202,6 +324,22 @@ export class IDadaCollectible extends Contract {
       drawingId: BigNumberish,
       printIndex: BigNumberish,
       overrides?: PayableOverrides
+    ): Promise<BigNumber>;
+
+    makeCollectibleUnavailableToSale(
+      to: string,
+      drawingId: BigNumberish,
+      printIndex: BigNumberish,
+      lastSellValue: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "makeCollectibleUnavailableToSale(address,uint256,uint256,uint256)"(
+      to: string,
+      drawingId: BigNumberish,
+      printIndex: BigNumberish,
+      lastSellValue: BigNumberish,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     transfer(
@@ -230,6 +368,16 @@ export class IDadaCollectible extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
+    OfferedForSale(
+      arg0: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "OfferedForSale(uint256)"(
+      arg0: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
     buyCollectible(
       drawingId: BigNumberish,
       printIndex: BigNumberish,
@@ -240,6 +388,22 @@ export class IDadaCollectible extends Contract {
       drawingId: BigNumberish,
       printIndex: BigNumberish,
       overrides?: PayableOverrides
+    ): Promise<PopulatedTransaction>;
+
+    makeCollectibleUnavailableToSale(
+      to: string,
+      drawingId: BigNumberish,
+      printIndex: BigNumberish,
+      lastSellValue: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "makeCollectibleUnavailableToSale(address,uint256,uint256,uint256)"(
+      to: string,
+      drawingId: BigNumberish,
+      printIndex: BigNumberish,
+      lastSellValue: BigNumberish,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     transfer(
