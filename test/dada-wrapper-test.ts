@@ -140,7 +140,7 @@ describe.only('Dada Wrapper', function () {
         expect(await dada.DrawingPrintToAddress(printIdx)).to.equal(dadaWrapper.address)
         expect(await dadaWrapperAsAlice.ownerOf(tokenId)).to.equal(aliceAddress)
 
-        await dadaWrapperAsAlice.unwrapCreep(drawingId, printIdx)
+        await dadaWrapperAsAlice.unwrap2017(drawingId, printIdx)
         expect(dadaWrapper.ownerOf(tokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
         expect(await dada.DrawingPrintToAddress(printIdx)).to.equal(aliceAddress)
       })
@@ -174,7 +174,7 @@ describe.only('Dada Wrapper', function () {
         expect(await mockNft.ownerOf(tokenId)).to.equal(dadaWrapper.address)
         expect(await dadaWrapper.ownerOf(wrappedTokenId)).to.equal(aliceAddress)
 
-        await dadaWrapperAsAlice.unwrapWeirdo(tokenId)
+        await dadaWrapperAsAlice.unwrap2019(tokenId)
         expect(dadaWrapper.ownerOf(wrappedTokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
         expect(await mockNft.ownerOf(tokenId)).to.equal(aliceAddress)
       })
@@ -188,10 +188,10 @@ describe.only('Dada Wrapper', function () {
         await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printIdx)
 
         const tokenId = await dadaWrapper.get2017TokenId(drawingId, printIdx)
-        expect(await dadaWrapper.tokenURI(tokenId)).to.equal(mockConfig.baseUri + tokenId.toString())
+        expect(await dadaWrapper.tokenURI(tokenId)).to.equal(mockConfig.baseUri + tokenId.toString() + '.json')
 
         await dadaWrapper.setBaseURI('newUri/')
-        expect(await dadaWrapper.tokenURI(tokenId)).to.equal('newUri/' + tokenId.toString())
+        expect(await dadaWrapper.tokenURI(tokenId)).to.equal('newUri/' + tokenId.toString() + '.json')
         await dadaWrapper.setBaseURI(mockConfig.baseUri)
       })
       it('Does not allow anyone else to set base uri', async function () {

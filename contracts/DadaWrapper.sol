@@ -80,23 +80,23 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
     uint256 constant PREFIX_2019 = 20190000000000; /*Prefix for 14 digit token IDs*/
     uint256 constant DRAWING_ASSET_ID_MUL = 100000; /*Multiplier to shift middle identifier*/
 
-    event WrappedCreep(
+    event Wrapped2017(
         uint256 indexed drawingID,
         uint256 printID,
         uint256 wrappedTokenId
     );
-    event UnwrappedCreep(
+    event Unwrapped2017(
         uint256 indexed drawingID,
         uint256 printID,
         uint256 wrappedTokenId
     );
 
-    event WrappedWeirdo(
+    event Wrapped2019(
         uint256 indexed itemId,
         uint256 tokenId,
         uint256 wrappedTokenId
     );
-    event UnwrappedWeirdo(
+    event Unwrapped2019(
         uint256 indexed itemId,
         uint256 tokenId,
         uint256 wrappedTokenId
@@ -126,7 +126,7 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
     /// @dev Must call `offerCollectibleForSaleToAddress` with a 0 value purchase price offered to this contract address
     /// @param _drawingId 2017 ERC20 drawing ID
     /// @param _printIndex 2017 ERC20 print index
-    function wrapCreep(uint256 _drawingId, uint256 _printIndex) public {
+    function wrap2017(uint256 _drawingId, uint256 _printIndex) public {
         require(
             dadaCollectible.DrawingPrintToAddress(_printIndex) == msg.sender,
             "!owner"
@@ -155,14 +155,14 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
         require(!_exists(_wrappedTokenId), "minted"); /*Ensure this token has not been wrapped - failure condition should be unreachable*/
 
         _mint(msg.sender, _wrappedTokenId); /*Mint newly wrapped token to sender*/
-        emit WrappedCreep(_drawingId, _printIndex, _wrappedTokenId);
+        emit Wrapped2017(_drawingId, _printIndex, _wrappedTokenId);
     }
 
     /// @notice Transfer a wrapped 2017 ERC20 and receive the original ERC20 out
     /// @dev Burns the wrapped token, but it can be minted again if the same token is wrapped
     /// @param _drawingId 2017 ERC20 drawing ID
     /// @param _printIndex 2017 ERC20 print index
-    function unwrapCreep(uint256 _drawingId, uint256 _printIndex) public {
+    function unwrap2017(uint256 _drawingId, uint256 _printIndex) public {
         uint256 _wrappedTokenId = get2017TokenId(_drawingId, _printIndex); /*Encode drawing and print into token ID*/
         require(ownerOf(_wrappedTokenId) == msg.sender, "!owner"); /*Ensure sender owns the NFT they want to unwrap*/
         _burn(_wrappedTokenId); /*Send token to 0 address - can be re-minted later if re-wrapped*/
@@ -174,13 +174,13 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
         ); /*Send the original token to sender*/
 
         require(success); /*Ensure transfer was successful*/
-        emit UnwrappedCreep(_drawingId, _printIndex, _wrappedTokenId);
+        emit Unwrapped2017(_drawingId, _printIndex, _wrappedTokenId);
     }
 
     /// @notice Transfer a 2019 ERC721 to this contract and receive an NFT in return
     /// @dev Must call approve on this contract for specified token ID
     /// @param _tokenId 2019 ERC721 token ID
-    function wrapWeirdo(uint256 _tokenId) public {
+    function wrap2019(uint256 _tokenId) public {
         require(dadaNft.ownerOf(_tokenId) == msg.sender, "!owner"); /* Ensure sender owns the token they are trying to wrap*/
 
         dadaNft.transferFrom(msg.sender, address(this), _tokenId); /*Transfer ERC721 into this contract*/
@@ -193,13 +193,13 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
         require(!_exists(_wrappedTokenId), "minted"); /*Ensure this token has not been wrapped - failure condition should be unreacheable*/
 
         _mint(msg.sender, _wrappedTokenId); /*Mint newly wrapped token to sender*/
-        emit WrappedWeirdo(_itemId, _tokenId, _wrappedTokenId);
+        emit Wrapped2019(_itemId, _tokenId, _wrappedTokenId);
     }
 
     /// @notice Transfer a wrapped 2019 ERC721 and receive the original ERC721 out
     /// @dev Burns the wrapped token, but it can be minted again if the same token is wrapped
     /// @param _tokenId 2019 ERC721 token ID
-    function unwrapWeirdo(uint256 _tokenId) public {
+    function unwrap2019(uint256 _tokenId) public {
         (uint256 _itemId, , , , , , , , , ) = dadaNft.collectibleInfo(_tokenId); /*Fetch unique item ID to identify this drawing*/
         uint256 _wrappedTokenId = get2019TokenId(_itemId, _tokenId); /*Encode item and token into new token ID*/
         require(ownerOf(_wrappedTokenId) == msg.sender, "!owner"); /*Ensure sender owns the "NFT they want to unwrap*/
@@ -212,7 +212,7 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
 
         require(dadaNft.ownerOf(_tokenId) == msg.sender, "transfer failed"); /*Ensure transfer succeeded - failure condition should be unreachable*/
 
-        emit UnwrappedWeirdo(_itemId, _tokenId, _wrappedTokenId);
+        emit Unwrapped2019(_itemId, _tokenId, _wrappedTokenId);
     }
 
     /*****************
@@ -260,7 +260,7 @@ contract DadaCollectibleWrapper is ERC721, Ownable {
         string memory baseURI = _baseURI();
         return
             bytes(baseURI).length > 0
-                ? string(abi.encodePacked(baseURI, tokenId.toString()))
+                ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json"))
                 : "";
     }
 

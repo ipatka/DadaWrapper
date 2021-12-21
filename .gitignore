@@ -15,6 +15,4 @@ nftContent/
 coverage
 coverage.json
 
-output
-output2019
-out
+out*

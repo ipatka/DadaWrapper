@@ -7,11 +7,11 @@ export const wrap2017 = async (dada: DadaCollectible, price: BigNumber, wrapper:
   await dada.alt_buyCollectible(drawingId, printId, { value: price })
 
   await dada.offerCollectibleForSaleToAddress(drawingId, printId, 0, wrapper.address)
-  await wrapper.wrapCreep(drawingId, printId)
+  await wrapper.wrap2017(drawingId, printId)
 }
 
 export const wrap2019 = async (dada: MockDadaNft, wrapper: DadaCollectibleWrapper, tokenId: number) => {
   await dada.approve(wrapper.address, tokenId)
 
-  await wrapper.wrapWeirdo(tokenId)
+  await wrapper.wrap2019(tokenId)
 }
