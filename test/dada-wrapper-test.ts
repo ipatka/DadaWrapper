@@ -50,6 +50,9 @@ describe.only('Dada Wrapper', function () {
         itemId: 123,
       },
       {
+        itemId: 123,
+      },
+      {
         itemId: 456,
       },
       {
@@ -121,35 +124,118 @@ describe.only('Dada Wrapper', function () {
     describe('Wrapping', function () {
       it('Allows alice to wrap a token', async function () {
         const drawingId = drawingIds[0]
-        const printIdx = initialPrintIndexes[0]
-        const price = ethers.utils.parseEther(initialPrices[0])
+        const printId = initialPrintIndexes[0]
+        const price = ethers.utils.parseUnits(initialPrices[0], 'wei')
 
-        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printIdx)
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printId)
 
-        expect(await dada.DrawingPrintToAddress(printIdx)).to.equal(dadaWrapper.address)
-        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printIdx)
+        expect(await dada.DrawingPrintToAddress(printId)).to.equal(dadaWrapper.address)
+        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printId)
         expect(await dadaWrapper.ownerOf(tokenId)).to.equal(aliceAddress)
       })
+      it('Fails if token is not offered to contract', async function () {
+        const drawingId = drawingIds[0]
+        const printId = initialPrintIndexes[0]
+        const price = ethers.utils.parseUnits(initialPrices[0], 'wei')
+        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printId)
+
+        await dadaAsAlice.alt_buyCollectible(drawingId, printId, { value: price })
+
+        expect(dadaWrapperAsAlice.wrap2017(drawingId, printId)).to.be.reverted
+        expect(await dada.DrawingPrintToAddress(printId)).to.equal(alice.address)
+        expect(dadaWrapper.ownerOf(tokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
+      })
+
+      it('Fails if Alice does not own token', async function () {
+        const drawingId = drawingIds[0]
+        const printId = initialPrintIndexes[0]
+        const price = ethers.utils.parseUnits(initialPrices[0], 'wei')
+        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printId)
+
+        await dadaAsAlice.alt_buyCollectible(drawingId, printId, { value: price })
+        await dadaAsAlice.transfer(deployer.address, drawingId, printId)
+
+        expect(dadaWrapperAsAlice.wrap2017(drawingId, printId)).to.be.revertedWith('!owner')
+        expect(await dada.DrawingPrintToAddress(printId)).to.equal(deployer.address)
+        expect(dadaWrapper.ownerOf(tokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
+      })
+
+      it('Fails if Dada contract is paused', async function () {
+        const drawingId = drawingIds[0]
+        const printId = initialPrintIndexes[0]
+        const price = ethers.utils.parseUnits(initialPrices[0], 'wei')
+        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printId)
+
+        await dadaAsAlice.alt_buyCollectible(drawingId, printId, { value: price })
+        await dadaAsAlice.offerCollectibleForSaleToAddress(drawingId, printId, 0, dadaWrapper.address)
+        
+        await dada.flipSwitchTo(false)
+        
+
+        expect(dadaWrapperAsAlice.wrap2017(drawingId, printId)).to.be.reverted
+        expect(await dada.DrawingPrintToAddress(printId)).to.equal(alice.address)
+        expect(dadaWrapper.ownerOf(tokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
+      })
+
       it('Allows alice to unwrap a token', async function () {
         const drawingId = drawingIds[0]
-        const printIdx = initialPrintIndexes[0]
-        const price = ethers.utils.parseEther(initialPrices[0])
-        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printIdx)
-        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printIdx)
+        const printId = initialPrintIndexes[0]
+        const price = ethers.utils.parseUnits(initialPrices[0], 'wei')
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printId)
+        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printId)
         console.log({ aliceAddress })
-        expect(await dada.DrawingPrintToAddress(printIdx)).to.equal(dadaWrapper.address)
+        expect(await dada.DrawingPrintToAddress(printId)).to.equal(dadaWrapper.address)
         expect(await dadaWrapperAsAlice.ownerOf(tokenId)).to.equal(aliceAddress)
 
-        await dadaWrapperAsAlice.unwrap2017(drawingId, printIdx)
+        await dadaWrapperAsAlice.unwrap2017(drawingId, printId)
         expect(dadaWrapper.ownerOf(tokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
-        expect(await dada.DrawingPrintToAddress(printIdx)).to.equal(aliceAddress)
+        expect(await dada.DrawingPrintToAddress(printId)).to.equal(aliceAddress)
+      })
+      it('Fails if sender does not own the wrapped token', async function () {
+        const drawingId = drawingIds[0]
+        const printId = initialPrintIndexes[0]
+        const price = ethers.utils.parseUnits(initialPrices[0], 'wei')
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printId)
+        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printId)
+        await dadaWrapperAsAlice.transferFrom(alice.address, deployer.address, tokenId)
+
+        expect(dadaWrapperAsAlice.unwrap2017(drawingId, printId)).to.be.revertedWith('!owner')
+      })
+      it('Unwrap fails if dada contract is paused', async function () {
+        const drawingId = drawingIds[0]
+        const printId = initialPrintIndexes[0]
+        const price = ethers.utils.parseUnits(initialPrices[0], 'wei')
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printId)
+        
+        await dada.flipSwitchTo(false)
+
+        expect(dadaWrapperAsAlice.unwrap2017(drawingId, printId)).to.be.reverted
+      })
+      it('Allows alice to wrap the same token multiple times', async function () {
+        const drawingId = drawingIds[0]
+        const printId = initialPrintIndexes[0]
+        const price = ethers.utils.parseUnits(initialPrices[0], 'wei')
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printId)
+        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printId)
+        expect(await dada.DrawingPrintToAddress(printId)).to.equal(dadaWrapper.address)
+        expect(await dadaWrapperAsAlice.ownerOf(tokenId)).to.equal(aliceAddress)
+
+        await dadaWrapperAsAlice.unwrap2017(drawingId, printId)
+        expect(dadaWrapper.ownerOf(tokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
+        expect(await dada.DrawingPrintToAddress(printId)).to.equal(aliceAddress)
+
+        await dadaAsAlice.offerCollectibleForSaleToAddress(drawingId, printId, 0, dadaWrapperAsAlice.address)
+        await dadaWrapperAsAlice.wrap2017(drawingId, printId)
+        expect(await dada.DrawingPrintToAddress(printId)).to.equal(dadaWrapper.address)
+        expect(await dadaWrapperAsAlice.ownerOf(tokenId)).to.equal(aliceAddress)
       })
       it('Retains the last sale price during wrapping', async function () {
-        const drawingId = drawingIds[0]
-        const printIdx = initialPrintIndexes[0]
-        const price = ethers.utils.parseEther(initialPrices[0])
-        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printIdx)
-        const offer = await dada.OfferedForSale(initialPrintIndexes[0])
+        const drawingId = drawingIds[1]
+        const printId = initialPrintIndexes[1]
+        const price = ethers.utils.parseUnits(initialPrices[1], 'wei')
+        console.log({price})
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printId)
+        const offer = await dada.OfferedForSale(initialPrintIndexes[1])
         expect(offer.lastSellValue).to.equal(price)
         expect(offer.isForSale).to.equal(false)
         expect(offer.seller).to.equal(aliceAddress)
@@ -166,6 +252,20 @@ describe.only('Dada Wrapper', function () {
         console.log({ wrappedTokenId })
         expect(await dadaWrapper.ownerOf(wrappedTokenId)).to.equal(aliceAddress)
       })
+      it('Allows multiple tokens from same item id to be wrapped', async function () {
+        const tokenId = 1
+
+        expect(await mockNft.ownerOf(tokenId)).to.equal(aliceAddress)
+        await wrap2019(mockNftAsAlice, dadaWrapperAsAlice, tokenId)
+        await wrap2019(mockNftAsAlice, dadaWrapperAsAlice, 2)
+        expect(await mockNft.ownerOf(tokenId)).to.equal(dadaWrapper.address)
+        expect(await mockNft.ownerOf(2)).to.equal(dadaWrapper.address)
+        const wrappedTokenId = await dadaWrapper.get2019TokenId(mockConfig.nfts[0].itemId, tokenId)
+        const wrappedTokenId2 = await dadaWrapper.get2019TokenId(mockConfig.nfts[0].itemId, 2)
+        console.log({ wrappedTokenId, wrappedTokenId2 })
+        expect(await dadaWrapper.ownerOf(wrappedTokenId)).to.equal(aliceAddress)
+        expect(await dadaWrapper.ownerOf(wrappedTokenId2)).to.equal(aliceAddress)
+      })
       it('Allows alice to unwrap a token', async function () {
         const tokenId = 1
 
@@ -178,16 +278,33 @@ describe.only('Dada Wrapper', function () {
         expect(dadaWrapper.ownerOf(wrappedTokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
         expect(await mockNft.ownerOf(tokenId)).to.equal(aliceAddress)
       })
+
+      it('Allows alice to wrap a token multiple times', async function () {
+        const tokenId = 1
+
+        await wrap2019(mockNftAsAlice, dadaWrapperAsAlice, tokenId)
+        const wrappedTokenId = await dadaWrapper.get2019TokenId(mockConfig.nfts[0].itemId, tokenId)
+        expect(await mockNft.ownerOf(tokenId)).to.equal(dadaWrapper.address)
+        expect(await dadaWrapper.ownerOf(wrappedTokenId)).to.equal(aliceAddress)
+
+        await dadaWrapperAsAlice.unwrap2019(tokenId)
+        expect(dadaWrapper.ownerOf(wrappedTokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
+        expect(await mockNft.ownerOf(tokenId)).to.equal(aliceAddress)
+
+        await wrap2019(mockNftAsAlice, dadaWrapperAsAlice, tokenId)
+        expect(await mockNft.ownerOf(tokenId)).to.equal(dadaWrapper.address)
+        expect(await dadaWrapper.ownerOf(wrappedTokenId)).to.equal(aliceAddress)
+      })
     })
     describe('Access control', function () {
       it('Allows owner to set base URI', async function () {
         const drawingId = drawingIds[0]
-        const printIdx = initialPrintIndexes[0]
-        const price = ethers.utils.parseEther(initialPrices[0])
+        const printId = initialPrintIndexes[0]
+        const price = ethers.utils.parseUnits(initialPrices[0], 'wei')
 
-        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printIdx)
+        await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printId)
 
-        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printIdx)
+        const tokenId = await dadaWrapper.get2017TokenId(drawingId, printId)
         expect(await dadaWrapper.tokenURI(tokenId)).to.equal(mockConfig.baseUri + tokenId.toString() + '.json')
 
         await dadaWrapper.setBaseURI('newUri/')

@@ -1,26 +1,34 @@
 import * as fs from 'fs'
-const srcMeta = require('./csvjson(1).json')
+const srcMeta = require('../input/2017.json')
 const supplies = require('./supplies.json')
 
-const basePath = '/Users/isaacpatka/dada/DadaWrapper/output2019/'
+const basePath = '/Users/isaacpatka/dada/DadaWrapper/output2017-a/'
 
 const initialPrints = {}
+const supplyMap = {}
 for (let index = 0; index < supplies.length; index++) {
   const element = supplies[index]
   initialPrints[element['Drawing Id']] = element['Initial PrintIndex']
+  supplyMap[element['Drawing Id']] = element['Total Supply']
 }
 
 console.log({ initialPrints })
 
 const saveMeta = (metadata: string, filename: string) => {
-  fs.writeFileSync(`${basePath}${filename}.json`,metadata)
+  fs.writeFileSync(`${basePath}${filename}.json`, metadata)
 }
 
-for (let index = 0; index < srcMeta.length; index++) {
+const start = 0
+const end = srcMeta.length
+
+let count = 0
+
+for (let index = start; index < end; index++) {
   const element = srcMeta[index]
   const metadata = {
-    name: `${element['Year']} ${element['name']}`,
-    image: element['image'],
+    name: element['name'],
+    description: element['description'],
+    image: element['Image reference'],
     attributes: [
       {
         trait_type: 'collection',
@@ -29,6 +37,10 @@ for (let index = 0; index < srcMeta.length; index++) {
       {
         trait_type: 'artist',
         value: element['Trait : Artist'],
+      },
+      {
+        trait_type: 'artist profile',
+        value: element['Trait : Artist Profile'],
       },
       {
         trait_type: 'scarcity',
@@ -43,11 +55,21 @@ for (let index = 0; index < srcMeta.length; index++) {
         value: element['Trait : Drawing Date'],
       },
       {
+        trait_type: 'drawing name',
+        value: element['Trait : Drawing Name'],
+      },
+      {
         trait_type: 'conversation',
         value: element['Trait : Conversation'],
       },
     ],
   }
+  if (element['Trait: Scientific Name'])
+    metadata.attributes.push({
+      trait_type: 'scientific name',
+      value: element['Trait: Scientific Name'],
+    })
+
   if (element['Year'] == 2019) {
     const tokenId = element['drawingId / _tokenId']
     const tokenNumber = element['printIndex / token number']
@@ -55,22 +77,25 @@ for (let index = 0; index < srcMeta.length; index++) {
       const tokenNumberPadded = ('00000' + tokenNumber).slice(-5)
       const tokenIdPadded = ('00000' + tokenId).slice(-5)
       const wrappedTokenId = `2019${tokenIdPadded}${tokenNumberPadded}`
-      console.log({ wrappedTokenId })
+      console.log({ wrappedTokenId, metadata: JSON.stringify(metadata) })
       saveMeta(JSON.stringify(metadata), wrappedTokenId)
     }
   }
   if (element['Year'] == 2017) {
     const drawingId = element['drawingId / _tokenId']
     const drawingIdPadded = ('00000' + drawingId).slice(-5)
-    const totalSupply = initialPrints[drawingId]
+    const totalSupply = supplyMap[drawingId]
+    console.log({ totalSupply })
     const initialPrint = initialPrints[drawingId]
     console.log({ totalSupply })
-    for (let index = 0; index < totalSupply; index++) {
-      const tokenId = initialPrint + index
+    for (let j = 0; j < totalSupply; j++) {
+      const tokenId = initialPrint + j
       const tokenIdPadded = ('00000' + tokenId).slice(-5)
       const wrappedTokenId = `2017${drawingIdPadded}${tokenIdPadded}`
-      console.log({ wrappedTokenId, metadata: JSON.stringify(metadata) })
+      // console.log({ wrappedTokenId, metadata: JSON.stringify(metadata) })
       saveMeta(JSON.stringify(metadata), wrappedTokenId)
+      count++
+      console.log({ index, j, count })
     }
   }
 }

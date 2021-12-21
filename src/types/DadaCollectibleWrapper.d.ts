@@ -42,10 +42,10 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
     "tokenURI(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "unwrapCreep(uint256,uint256)": FunctionFragment;
-    "unwrapWeirdo(uint256)": FunctionFragment;
-    "wrapCreep(uint256,uint256)": FunctionFragment;
-    "wrapWeirdo(uint256)": FunctionFragment;
+    "unwrap2017(uint256,uint256)": FunctionFragment;
+    "unwrap2019(uint256)": FunctionFragment;
+    "wrap2017(uint256,uint256)": FunctionFragment;
+    "wrap2019(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -114,19 +114,19 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "unwrapCreep",
+    functionFragment: "unwrap2017",
     values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "unwrapWeirdo",
+    functionFragment: "unwrap2019",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "wrapCreep",
+    functionFragment: "wrap2017",
     values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "wrapWeirdo",
+    functionFragment: "wrap2019",
     values: [BigNumberish]
   ): string;
 
@@ -186,36 +186,30 @@ interface DadaCollectibleWrapperInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "unwrapCreep",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "unwrapWeirdo",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "wrapCreep", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "wrapWeirdo", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "unwrap2017", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "unwrap2019", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "wrap2017", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "wrap2019", data: BytesLike): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
-    "UnwrappedCreep(uint256,uint256,uint256)": EventFragment;
-    "UnwrappedWeirdo(uint256,uint256,uint256)": EventFragment;
-    "WrappedCreep(uint256,uint256,uint256)": EventFragment;
-    "WrappedWeirdo(uint256,uint256,uint256)": EventFragment;
+    "Unwrapped2017(uint256,uint256,uint256)": EventFragment;
+    "Unwrapped2019(uint256,uint256,uint256)": EventFragment;
+    "Wrapped2017(uint256,uint256,uint256)": EventFragment;
+    "Wrapped2019(uint256,uint256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UnwrappedCreep"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UnwrappedWeirdo"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "WrappedCreep"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "WrappedWeirdo"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Unwrapped2017"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Unwrapped2019"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Wrapped2017"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Wrapped2019"): EventFragment;
 }
 
 export class DadaCollectibleWrapper extends Contract {
@@ -469,46 +463,46 @@ export class DadaCollectibleWrapper extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    unwrapCreep(
+    unwrap2017(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "unwrapCreep(uint256,uint256)"(
+    "unwrap2017(uint256,uint256)"(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    unwrapWeirdo(
+    unwrap2019(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "unwrapWeirdo(uint256)"(
+    "unwrap2019(uint256)"(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    wrapCreep(
+    wrap2017(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "wrapCreep(uint256,uint256)"(
+    "wrap2017(uint256,uint256)"(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    wrapWeirdo(
+    wrap2019(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "wrapWeirdo(uint256)"(
+    "wrap2019(uint256)"(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
@@ -694,46 +688,46 @@ export class DadaCollectibleWrapper extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  unwrapCreep(
+  unwrap2017(
     _drawingId: BigNumberish,
     _printIndex: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "unwrapCreep(uint256,uint256)"(
+  "unwrap2017(uint256,uint256)"(
     _drawingId: BigNumberish,
     _printIndex: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  unwrapWeirdo(
+  unwrap2019(
     _tokenId: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "unwrapWeirdo(uint256)"(
+  "unwrap2019(uint256)"(
     _tokenId: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  wrapCreep(
+  wrap2017(
     _drawingId: BigNumberish,
     _printIndex: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "wrapCreep(uint256,uint256)"(
+  "wrap2017(uint256,uint256)"(
     _drawingId: BigNumberish,
     _printIndex: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  wrapWeirdo(
+  wrap2019(
     _tokenId: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "wrapWeirdo(uint256)"(
+  "wrap2019(uint256)"(
     _tokenId: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
@@ -916,46 +910,43 @@ export class DadaCollectibleWrapper extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    unwrapCreep(
+    unwrap2017(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "unwrapCreep(uint256,uint256)"(
+    "unwrap2017(uint256,uint256)"(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    unwrapWeirdo(
+    unwrap2019(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "unwrapWeirdo(uint256)"(
+    "unwrap2019(uint256)"(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    wrapCreep(
+    wrap2017(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "wrapCreep(uint256,uint256)"(
+    "wrap2017(uint256,uint256)"(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    wrapWeirdo(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    wrap2019(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    "wrapWeirdo(uint256)"(
+    "wrap2019(uint256)"(
       _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -985,25 +976,25 @@ export class DadaCollectibleWrapper extends Contract {
       tokenId: BigNumberish | null
     ): EventFilter;
 
-    UnwrappedCreep(
+    Unwrapped2017(
       drawingID: BigNumberish | null,
       printID: null,
       wrappedTokenId: null
     ): EventFilter;
 
-    UnwrappedWeirdo(
+    Unwrapped2019(
       itemId: BigNumberish | null,
       tokenId: null,
       wrappedTokenId: null
     ): EventFilter;
 
-    WrappedCreep(
+    Wrapped2017(
       drawingID: BigNumberish | null,
       printID: null,
       wrappedTokenId: null
     ): EventFilter;
 
-    WrappedWeirdo(
+    Wrapped2019(
       itemId: BigNumberish | null,
       tokenId: null,
       wrappedTokenId: null
@@ -1194,46 +1185,43 @@ export class DadaCollectibleWrapper extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    unwrapCreep(
+    unwrap2017(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    "unwrapCreep(uint256,uint256)"(
+    "unwrap2017(uint256,uint256)"(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    unwrapWeirdo(
+    unwrap2019(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    "unwrapWeirdo(uint256)"(
+    "unwrap2019(uint256)"(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    wrapCreep(
+    wrap2017(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    "wrapCreep(uint256,uint256)"(
+    "wrap2017(uint256,uint256)"(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    wrapWeirdo(
-      _tokenId: BigNumberish,
-      overrides?: Overrides
-    ): Promise<BigNumber>;
+    wrap2019(_tokenId: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
 
-    "wrapWeirdo(uint256)"(
+    "wrap2019(uint256)"(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
@@ -1429,46 +1417,46 @@ export class DadaCollectibleWrapper extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    unwrapCreep(
+    unwrap2017(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "unwrapCreep(uint256,uint256)"(
+    "unwrap2017(uint256,uint256)"(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    unwrapWeirdo(
+    unwrap2019(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "unwrapWeirdo(uint256)"(
+    "unwrap2019(uint256)"(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    wrapCreep(
+    wrap2017(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "wrapCreep(uint256,uint256)"(
+    "wrap2017(uint256,uint256)"(
       _drawingId: BigNumberish,
       _printIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    wrapWeirdo(
+    wrap2019(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "wrapWeirdo(uint256)"(
+    "wrap2019(uint256)"(
       _tokenId: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;

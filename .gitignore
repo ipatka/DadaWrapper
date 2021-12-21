@@ -16,3 +16,4 @@ coverage
 coverage.json
 
 out*
+input
