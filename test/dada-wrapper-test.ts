@@ -78,8 +78,6 @@ describe.only('Dada Wrapper', function () {
     celesteAddress = celeste.address
     bobAddress = bob.address
 
-    console.log({ deployerAddress, aliceAddress, celesteAddress, bobAddress })
-
     provider = ethers.provider
   })
 
@@ -183,7 +181,6 @@ describe.only('Dada Wrapper', function () {
         const price = ethers.utils.parseUnits(initialPrices[0], 'wei')
         await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printId)
         const tokenId = await dadaWrapper.get2017TokenId(drawingId, printId)
-        console.log({ aliceAddress })
         expect(await dada.DrawingPrintToAddress(printId)).to.equal(dadaWrapper.address)
         expect(await dadaWrapperAsAlice.ownerOf(tokenId)).to.equal(aliceAddress)
 
@@ -233,7 +230,6 @@ describe.only('Dada Wrapper', function () {
         const drawingId = drawingIds[1]
         const printId = initialPrintIndexes[1]
         const price = ethers.utils.parseUnits(initialPrices[1], 'wei')
-        console.log({price})
         await wrap2017(dadaAsAlice, price, dadaWrapperAsAlice, drawingId, printId)
         const offer = await dada.OfferedForSale(initialPrintIndexes[1])
         expect(offer.lastSellValue).to.equal(price)
@@ -249,8 +245,20 @@ describe.only('Dada Wrapper', function () {
         await wrap2019(mockNftAsAlice, dadaWrapperAsAlice, tokenId)
         expect(await mockNft.ownerOf(tokenId)).to.equal(dadaWrapper.address)
         const wrappedTokenId = await dadaWrapper.get2019TokenId(mockConfig.nfts[0].itemId, tokenId)
-        console.log({ wrappedTokenId })
         expect(await dadaWrapper.ownerOf(wrappedTokenId)).to.equal(aliceAddress)
+      })
+      it('Wrap fails if sender does not approve contract', async function () {
+        const tokenId = 1
+
+        expect(await mockNft.ownerOf(tokenId)).to.equal(aliceAddress)
+        expect(dadaWrapperAsAlice.wrap2019(tokenId)).to.be.revertedWith('ERC721: transfer caller is not owner nor approved')
+      })
+      it('Wrap fails if sender does not own token', async function () {
+        const tokenId = 1
+
+        expect(await mockNft.ownerOf(tokenId)).to.equal(aliceAddress)
+        await mockNftAsAlice.transferFrom(alice.address, deployer.address,tokenId)
+        expect(dadaWrapperAsAlice.wrap2019(tokenId)).to.be.revertedWith('!owner')
       })
       it('Allows multiple tokens from same item id to be wrapped', async function () {
         const tokenId = 1
@@ -277,6 +285,18 @@ describe.only('Dada Wrapper', function () {
         await dadaWrapperAsAlice.unwrap2019(tokenId)
         expect(dadaWrapper.ownerOf(wrappedTokenId)).to.be.revertedWith('ERC721: owner query for nonexistent token')
         expect(await mockNft.ownerOf(tokenId)).to.equal(aliceAddress)
+      })
+      it('Unwrap fails if sender does not own token', async function () {
+        const tokenId = 1
+
+        await wrap2019(mockNftAsAlice, dadaWrapperAsAlice, tokenId)
+        const wrappedTokenId = await dadaWrapper.get2019TokenId(mockConfig.nfts[0].itemId, tokenId)
+        expect(await mockNft.ownerOf(tokenId)).to.equal(dadaWrapper.address)
+        expect(await dadaWrapper.ownerOf(wrappedTokenId)).to.equal(aliceAddress)
+        
+        await dadaWrapperAsAlice.transferFrom(alice.address, deployer.address, wrappedTokenId)
+
+        expect(dadaWrapperAsAlice.unwrap2019(tokenId)).to.be.revertedWith('!owner')
       })
 
       it('Allows alice to wrap a token multiple times', async function () {

@@ -10,7 +10,7 @@ const dadaNftAddress = '0x7A8671a0b3b29268eED685da9CbF193157D85aF9'
   const Wrapper = await ethers.getContractFactory('DadaCollectibleWrapper')
   
   const uri = 'https://dada-metadata.s3.amazonaws.com/tokens/'
-  const contractUri = 'placeholder.json'
+  const contractUri = 'https://dada-metadata.s3.amazonaws.com/contract.json'
 
   const wrapper = (await Wrapper.deploy(dadaCollectibleAddress, dadaNftAddress, uri, contractUri)) as DadaCollectibleWrapper
   

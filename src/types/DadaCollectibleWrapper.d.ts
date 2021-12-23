@@ -261,32 +261,32 @@ export class DadaCollectibleWrapper extends Contract {
     }>;
 
     get2017TokenId(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
     "get2017TokenId(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
     get2019TokenId(
-      _itemId: BigNumberish,
-      _tokenId: BigNumberish,
+      _2019TokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
     "get2019TokenId(uint256,uint256)"(
-      _itemId: BigNumberish,
-      _tokenId: BigNumberish,
+      _2019TokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
@@ -464,46 +464,46 @@ export class DadaCollectibleWrapper extends Contract {
     ): Promise<ContractTransaction>;
 
     unwrap2017(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     "unwrap2017(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     unwrap2019(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     "unwrap2019(uint256)"(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     wrap2017(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     "wrap2017(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     wrap2019(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     "wrap2019(uint256)"(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
   };
@@ -532,26 +532,26 @@ export class DadaCollectibleWrapper extends Contract {
   "contractURI()"(overrides?: CallOverrides): Promise<string>;
 
   get2017TokenId(
-    _drawingId: BigNumberish,
-    _printIndex: BigNumberish,
+    _2017DrawingId: BigNumberish,
+    _2017PrintIndex: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   "get2017TokenId(uint256,uint256)"(
-    _drawingId: BigNumberish,
-    _printIndex: BigNumberish,
+    _2017DrawingId: BigNumberish,
+    _2017PrintIndex: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   get2019TokenId(
-    _itemId: BigNumberish,
-    _tokenId: BigNumberish,
+    _2019TokenId: BigNumberish,
+    _2019TokenNumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   "get2019TokenId(uint256,uint256)"(
-    _itemId: BigNumberish,
-    _tokenId: BigNumberish,
+    _2019TokenId: BigNumberish,
+    _2019TokenNumber: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -689,46 +689,46 @@ export class DadaCollectibleWrapper extends Contract {
   ): Promise<ContractTransaction>;
 
   unwrap2017(
-    _drawingId: BigNumberish,
-    _printIndex: BigNumberish,
+    _2017DrawingId: BigNumberish,
+    _2017PrintIndex: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   "unwrap2017(uint256,uint256)"(
-    _drawingId: BigNumberish,
-    _printIndex: BigNumberish,
+    _2017DrawingId: BigNumberish,
+    _2017PrintIndex: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   unwrap2019(
-    _tokenId: BigNumberish,
+    _2019TokenNumber: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   "unwrap2019(uint256)"(
-    _tokenId: BigNumberish,
+    _2019TokenNumber: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   wrap2017(
-    _drawingId: BigNumberish,
-    _printIndex: BigNumberish,
+    _2017DrawingId: BigNumberish,
+    _2017PrintIndex: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   "wrap2017(uint256,uint256)"(
-    _drawingId: BigNumberish,
-    _printIndex: BigNumberish,
+    _2017DrawingId: BigNumberish,
+    _2017PrintIndex: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   wrap2019(
-    _tokenId: BigNumberish,
+    _2019TokenNumber: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   "wrap2019(uint256)"(
-    _tokenId: BigNumberish,
+    _2019TokenNumber: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
@@ -757,26 +757,26 @@ export class DadaCollectibleWrapper extends Contract {
     "contractURI()"(overrides?: CallOverrides): Promise<string>;
 
     get2017TokenId(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "get2017TokenId(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     get2019TokenId(
-      _itemId: BigNumberish,
-      _tokenId: BigNumberish,
+      _2019TokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "get2019TokenId(uint256,uint256)"(
-      _itemId: BigNumberish,
-      _tokenId: BigNumberish,
+      _2019TokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -911,43 +911,46 @@ export class DadaCollectibleWrapper extends Contract {
     ): Promise<void>;
 
     unwrap2017(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "unwrap2017(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     unwrap2019(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "unwrap2019(uint256)"(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     wrap2017(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "wrap2017(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    wrap2019(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    wrap2019(
+      _2019TokenNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     "wrap2019(uint256)"(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -977,27 +980,27 @@ export class DadaCollectibleWrapper extends Contract {
     ): EventFilter;
 
     Unwrapped2017(
-      drawingID: BigNumberish | null,
-      printID: null,
-      wrappedTokenId: null
+      _2017DrawingId: null,
+      _2017PrintIndex: BigNumberish | null,
+      _wrappedTokenId: null
     ): EventFilter;
 
     Unwrapped2019(
-      itemId: BigNumberish | null,
-      tokenId: null,
-      wrappedTokenId: null
+      _2019TokenId: null,
+      _2019TokenNumber: BigNumberish | null,
+      _wrappedTokenId: null
     ): EventFilter;
 
     Wrapped2017(
-      drawingID: BigNumberish | null,
-      printID: null,
-      wrappedTokenId: null
+      _2017DrawingId: null,
+      _2017PrintIndex: BigNumberish | null,
+      _wrappedTokenId: null
     ): EventFilter;
 
     Wrapped2019(
-      itemId: BigNumberish | null,
-      tokenId: null,
-      wrappedTokenId: null
+      _2019TokenId: null,
+      _2019TokenNumber: BigNumberish | null,
+      _wrappedTokenId: null
     ): EventFilter;
   };
 
@@ -1026,26 +1029,26 @@ export class DadaCollectibleWrapper extends Contract {
     "contractURI()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     get2017TokenId(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "get2017TokenId(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     get2019TokenId(
-      _itemId: BigNumberish,
-      _tokenId: BigNumberish,
+      _2019TokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "get2019TokenId(uint256,uint256)"(
-      _itemId: BigNumberish,
-      _tokenId: BigNumberish,
+      _2019TokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1186,43 +1189,46 @@ export class DadaCollectibleWrapper extends Contract {
     ): Promise<BigNumber>;
 
     unwrap2017(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
     "unwrap2017(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
     unwrap2019(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
     "unwrap2019(uint256)"(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
     wrap2017(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
     "wrap2017(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    wrap2019(_tokenId: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
+    wrap2019(
+      _2019TokenNumber: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
 
     "wrap2019(uint256)"(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
   };
@@ -1255,26 +1261,26 @@ export class DadaCollectibleWrapper extends Contract {
     "contractURI()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     get2017TokenId(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "get2017TokenId(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     get2019TokenId(
-      _itemId: BigNumberish,
-      _tokenId: BigNumberish,
+      _2019TokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "get2019TokenId(uint256,uint256)"(
-      _itemId: BigNumberish,
-      _tokenId: BigNumberish,
+      _2019TokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1418,46 +1424,46 @@ export class DadaCollectibleWrapper extends Contract {
     ): Promise<PopulatedTransaction>;
 
     unwrap2017(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     "unwrap2017(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     unwrap2019(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     "unwrap2019(uint256)"(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     wrap2017(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     "wrap2017(uint256,uint256)"(
-      _drawingId: BigNumberish,
-      _printIndex: BigNumberish,
+      _2017DrawingId: BigNumberish,
+      _2017PrintIndex: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     wrap2019(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     "wrap2019(uint256)"(
-      _tokenId: BigNumberish,
+      _2019TokenNumber: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
   };

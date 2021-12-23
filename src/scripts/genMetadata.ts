@@ -1,8 +1,8 @@
 import * as fs from 'fs'
-const srcMeta = require('../input/2017.json')
+const srcMeta = require('../input/2019a.json')
 const supplies = require('./supplies.json')
 
-const basePath = '/Users/isaacpatka/dada/DadaWrapper/output2017-a/'
+const basePath = '/Users/isaacpatka/dada/DadaWrapper/outputtest/'
 
 const initialPrints = {}
 const supplyMap = {}
@@ -20,11 +20,13 @@ const saveMeta = (metadata: string, filename: string) => {
 
 const start = 0
 const end = srcMeta.length
+console.log({end})
 
 let count = 0
 
 for (let index = start; index < end; index++) {
   const element = srcMeta[index]
+  console.log({element})
   const metadata = {
     name: element['name'],
     description: element['description'],
@@ -64,30 +66,36 @@ for (let index = start; index < end; index++) {
       },
     ],
   }
-  if (element['Trait: Scientific Name'])
+  if (element['Trait : Scientific Name'])
     metadata.attributes.push({
       trait_type: 'scientific name',
-      value: element['Trait: Scientific Name'],
+      value: element['Trait : Scientific Name'],
+    })
+  if (element['Trait : Animal'])
+    metadata.attributes.push({
+      trait_type: 'animal',
+      value: element['Trait : Animal'],
+    })
+  if (element['Trait : Occupation'])
+    metadata.attributes.push({
+      trait_type: 'occupation',
+      value: element['Trait : Occupation'],
     })
 
   if (element['Year'] == 2019) {
     const tokenId = element['drawingId / _tokenId']
     const tokenNumber = element['printIndex / token number']
-    if (tokenNumber) {
       const tokenNumberPadded = ('00000' + tokenNumber).slice(-5)
       const tokenIdPadded = ('00000' + tokenId).slice(-5)
       const wrappedTokenId = `2019${tokenIdPadded}${tokenNumberPadded}`
       console.log({ wrappedTokenId, metadata: JSON.stringify(metadata) })
       saveMeta(JSON.stringify(metadata), wrappedTokenId)
-    }
   }
   if (element['Year'] == 2017) {
     const drawingId = element['drawingId / _tokenId']
     const drawingIdPadded = ('00000' + drawingId).slice(-5)
     const totalSupply = supplyMap[drawingId]
-    console.log({ totalSupply })
     const initialPrint = initialPrints[drawingId]
-    console.log({ totalSupply })
     for (let j = 0; j < totalSupply; j++) {
       const tokenId = initialPrint + j
       const tokenIdPadded = ('00000' + tokenId).slice(-5)
